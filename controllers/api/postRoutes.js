@@ -35,4 +35,16 @@ router.get("/:id", withAuth, async (req, res) =>{
     }
 })
 
+router.post('/', async (req, res) => {
+    const body = req.body;
+    try{
+        const newPost = await Post.create({
+            ...body,
+            user_id: req.session.user_id
+        })
+        res.status(200).json(newPost)
+    }
+    catch(err){res.json(err);}
+})
+
 module.exports = router;
